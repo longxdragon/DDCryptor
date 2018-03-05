@@ -14,6 +14,7 @@
 		3D30626A1F3C5D9500266171 /* DDCryptorUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3062691F3C5D9500266171 /* DDCryptorUITests.m */; };
 		3D4728971F419EF700C8606E /* NSString+DDRSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4728961F419EF700C8606E /* NSString+DDRSA.m */; };
 		3D4728F61F41A0CF00C8606E /* DDCryptorFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4728F51F41A0CF00C8606E /* DDCryptorFile.m */; };
+		3DE8625B204CE5A700015E87 /* NSString+DDDES.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DE8625A204CE5A700015E87 /* NSString+DDDES.m */; };
 		59F616054008AE2C23ACAF46 /* libPods-DDCryptorTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30E49610D6BC37A51009EE9F /* libPods-DDCryptorTests.a */; };
 		68A15A6CB34B1EE94F26E50F /* libPods-DDCryptor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2619C270E5360AE7B780183E /* libPods-DDCryptor.a */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,8 @@
 		3D4728981F419F0C00C8606E /* DDCryptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDCryptor.h; sourceTree = "<group>"; };
 		3D4728F41F41A0CF00C8606E /* DDCryptorFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCryptorFile.h; sourceTree = "<group>"; };
 		3D4728F51F41A0CF00C8606E /* DDCryptorFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDCryptorFile.m; sourceTree = "<group>"; };
+		3DE86259204CE5A700015E87 /* NSString+DDDES.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+DDDES.h"; sourceTree = "<group>"; };
+		3DE8625A204CE5A700015E87 /* NSString+DDDES.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDDES.m"; sourceTree = "<group>"; };
 		866E2004A4A947A772204984 /* Pods-DDCryptor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DDCryptor.release.xcconfig"; path = "Pods/Target Support Files/Pods-DDCryptor/Pods-DDCryptor.release.xcconfig"; sourceTree = "<group>"; };
 		9FAEFC0FB7A484B9E93B860D /* Pods-DDCryptorTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DDCryptorTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DDCryptorTests/Pods-DDCryptorTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F013BFDB195F83B6AE3C0410 /* Pods-DDCryptorTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DDCryptorTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DDCryptorTests/Pods-DDCryptorTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -155,6 +158,8 @@
 				3D4728981F419F0C00C8606E /* DDCryptor.h */,
 				3D4728951F419EF700C8606E /* NSString+DDRSA.h */,
 				3D4728961F419EF700C8606E /* NSString+DDRSA.m */,
+				3DE86259204CE5A700015E87 /* NSString+DDDES.h */,
+				3DE8625A204CE5A700015E87 /* NSString+DDDES.m */,
 				3D4728F41F41A0CF00C8606E /* DDCryptorFile.h */,
 				3D4728F51F41A0CF00C8606E /* DDCryptorFile.m */,
 			);
@@ -413,6 +418,7 @@
 			files = (
 				3D3062491F3C5D9500266171 /* AppDelegate.m in Sources */,
 				3D4728F61F41A0CF00C8606E /* DDCryptorFile.m in Sources */,
+				3DE8625B204CE5A700015E87 /* NSString+DDDES.m in Sources */,
 				3D3062461F3C5D9500266171 /* main.m in Sources */,
 				3D4728971F419EF700C8606E /* NSString+DDRSA.m in Sources */,
 			);

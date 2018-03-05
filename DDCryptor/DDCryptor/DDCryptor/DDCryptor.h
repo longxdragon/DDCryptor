@@ -10,5 +10,6 @@
 #define DDCryptor_h
 
 #import "NSString+DDRSA.h"
+#import "NSString+DDDES.h"
 
 #endif /* DDCryptor_h */
