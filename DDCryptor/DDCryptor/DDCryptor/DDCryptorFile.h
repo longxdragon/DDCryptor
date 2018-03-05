@@ -12,4 +12,6 @@
 
 + (NSString *)rsaPublicKeyFile;
 
++ (NSString *)rsaPrivateKeyFile;
+
 @end

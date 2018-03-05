@@ -30,12 +30,15 @@ static NSString *testStr = @"Test RSA encrypt! 的家都没拿绿卡是没电了
     XCTAssertNotNil(result, @"encrypt fail");
 }
 
-- (void)test3DESEncrypt {
+- (void)test3DESCrypt {
     NSString *key = @"lPrzT8BMoJt2dUSslfwn3Vkl";
     
-    NSString *result = [testStr dd_3desEncryptWithKey:key];
+    NSString *encrypt = [testStr dd_3desEncryptWithKey:key];
+    XCTAssertNotNil(encrypt, @"decry fail");
     
-    XCTAssertNotNil(result, @"encry fail");
+    NSString *decrypt = [encrypt dd_3desDecryptWithKey:key];
+    XCTAssertNotNil(decrypt, @"decry fail");
+    XCTAssertTrue([decrypt isEqualToString:testStr], @"decry fail");
 }
 
 @end

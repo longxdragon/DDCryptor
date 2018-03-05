@@ -11,5 +11,6 @@
 @interface NSString (DDDES)
 
 - (NSString *)dd_3desEncryptWithKey:(NSString *)key;
+- (NSString *)dd_3desDecryptWithKey:(NSString *)key;
 
 @end

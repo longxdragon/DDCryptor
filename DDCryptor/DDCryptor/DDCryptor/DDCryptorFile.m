@@ -29,4 +29,10 @@
     return file;
 }
 
++ (NSString *)rsaPrivateKeyFile {
+    NSString *file = [[self cryptorDir] stringByAppendingPathComponent:@"dd.privateKey.pem"];
+    
+    return file;
+}
+
 @end
