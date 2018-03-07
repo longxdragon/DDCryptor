@@ -46,6 +46,7 @@ f+t8VylZJ6Uyecz4BHR3AkEApO/6wYCcK/2T/n4EH+auyCOjKPnN+6ZOOZH5wjd9\
 01clooxoqNaOFTK50TSHQL3QeTNH3TVmuKe2rVDim94FcA==";
 
 static NSString *ThreeDESKey = @"lPrzT8BMoJt2dUSslfwn3Vkl";
+static NSString *DESKey = @"lPrzT8BMoJt2dUSslfwn3Vkl";
 
 - (void)testRSAEncrypt {
     NSString *encrypt = [testStr dd_rsaEncryptWithPublicKey:RSAPublicKey padding:DD_RSA_PADDING_TYPE_PKCS1];
@@ -59,6 +60,14 @@ static NSString *ThreeDESKey = @"lPrzT8BMoJt2dUSslfwn3Vkl";
     NSString *encrypt = [testStr dd_3desEncryptWithKey:ThreeDESKey];
     XCTAssertNotNil(encrypt, @"decry fail");
     NSString *decrypt = [encrypt dd_3desDecryptWithKey:ThreeDESKey];
+    XCTAssertNotNil(decrypt, @"decry fail");
+    XCTAssertTrue([decrypt isEqualToString:testStr], @"decry fail");
+}
+
+- (void)testDESCrypt {
+    NSString *encrypt = [testStr dd_desEncryptWithKey:DESKey];
+    XCTAssertNotNil(encrypt, @"decry fail");
+    NSString *decrypt = [encrypt dd_desDecryptWithKey:DESKey];
     XCTAssertNotNil(decrypt, @"decry fail");
     XCTAssertTrue([decrypt isEqualToString:testStr], @"decry fail");
 }

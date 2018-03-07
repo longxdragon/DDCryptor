@@ -11,11 +11,16 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <GTMBase64/GTMBase64.h>
 
+typedef NS_ENUM(NSInteger, DDDESType) {
+    DDDESType3DES,
+    DDDESTypeDES
+};
+
 @implementation NSString (DDDES)
 
 static NSString *kDDDESGIV = @"dd.com.des";
 
-- (NSData *)_dd_3desCryptWithKey:(NSString *)key data:(NSData *)data isEncrypt:(BOOL)isEncrypt {
+- (NSData *)_dd_3desCryptWithKey:(NSString *)key data:(NSData *)data isEncrypt:(BOOL)isEncrypt type:(DDDESType)type {
     const char *cstr = [key cStringUsingEncoding:NSUTF8StringEncoding];
     NSData *keyData = [NSData dataWithBytes:cstr length:key.length];
     
@@ -25,7 +30,6 @@ static NSString *kDDDESGIV = @"dd.com.des";
     size_t plainTextBufferSize = [data length];
     const void *vplainText = (const void *)[data bytes];
     
-    CCCryptorStatus ccStatus;
     uint8_t *bufferPtr = NULL;
     size_t bufferPtrSize = 0;
     size_t movedBytes = 0;
@@ -36,23 +40,38 @@ static NSString *kDDDESGIV = @"dd.com.des";
     
     const void *vkey = (const void *) [key UTF8String];
     const void *vinitVec = (const void *) [kDDDESGIV UTF8String];
-
-    ccStatus = CCCrypt(isEncrypt ? kCCEncrypt : kCCDecrypt,
-                       kCCAlgorithm3DES,
-                       kCCOptionPKCS7Padding,
-                       vkey,
-                       kCCKeySize3DES,
-                       vinitVec,
-                       vplainText,
-                       plainTextBufferSize,
-                       (void *)bufferPtr,
-                       bufferPtrSize,
-                       &movedBytes);
     
-    NSData *resultData = [NSData dataWithBytes:(const void *)bufferPtr length:(NSUInteger)movedBytes];
-    free((void *)bufferPtr);
+    uint32_t operation = kCCEncrypt;
+    if (!isEncrypt) {
+        operation = kCCDecrypt;
+    }
     
-    return resultData;
+    long keySize = kCCKeySize3DES;
+    uint32_t algorithm = kCCAlgorithm3DES;
+    switch (type) {
+        case DDDESType3DES: algorithm = kCCAlgorithm3DES; keySize = kCCKeySize3DES; break;
+        case DDDESTypeDES: algorithm = kCCAlgorithmDES; keySize = kCCKeySizeDES; break;
+    }
+    
+    CCCryptorStatus ccStatus = CCCrypt(operation,
+                                       algorithm,
+                                       kCCOptionPKCS7Padding,
+                                       vkey,
+                                       keySize,
+                                       vinitVec,
+                                       vplainText,
+                                       plainTextBufferSize,
+                                       (void *)bufferPtr,
+                                       bufferPtrSize,
+                                       &movedBytes);
+    if (ccStatus == kCCSuccess) {
+        NSData *resultData = [NSData dataWithBytes:(const void *)bufferPtr length:(NSUInteger)movedBytes];
+        free((void *)bufferPtr);
+        return resultData;
+    } else {
+        free((void *)bufferPtr);
+        return nil;
+    }
 }
 
 #pragma mark - Public
@@ -63,7 +82,7 @@ static NSString *kDDDESGIV = @"dd.com.des";
     }
     
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *resultData = [self _dd_3desCryptWithKey:key data:data isEncrypt:YES];
+    NSData *resultData = [self _dd_3desCryptWithKey:key data:data isEncrypt:YES type:DDDESType3DES];
     NSString *result = [GTMBase64 stringByEncodingData:resultData];
     
     return result;
@@ -75,7 +94,31 @@ static NSString *kDDDESGIV = @"dd.com.des";
     }
     
     NSData *data = [GTMBase64 decodeData:[self dataUsingEncoding:NSUTF8StringEncoding]];
-    NSData *resultData = [self _dd_3desCryptWithKey:key data:data isEncrypt:NO];
+    NSData *resultData = [self _dd_3desCryptWithKey:key data:data isEncrypt:NO type:DDDESType3DES];
+    NSString *result = [[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding];
+    
+    return result;
+}
+
+- (NSString *)dd_desEncryptWithKey:(NSString *)key {
+    if (!key || key.length == 0) {
+        return nil;
+    }
+    
+    NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *resultData = [self _dd_3desCryptWithKey:key data:data isEncrypt:YES type:DDDESTypeDES];
+    NSString *result = [GTMBase64 stringByEncodingData:resultData];
+    
+    return result;
+}
+
+- (NSString *)dd_desDecryptWithKey:(NSString *)key {
+    if (!key || key.length == 0) {
+        return nil;
+    }
+    
+    NSData *data = [GTMBase64 decodeData:[self dataUsingEncoding:NSUTF8StringEncoding]];
+    NSData *resultData = [self _dd_3desCryptWithKey:key data:data isEncrypt:NO type:DDDESTypeDES];
     NSString *result = [[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding];
     
     return result;
