@@ -14,7 +14,6 @@
 typedef NS_ENUM(NSInteger, DD_RSA_PADDING_TYPE) {
     DD_RSA_PADDING_TYPE_NONE       = RSA_NO_PADDING,
     DD_RSA_PADDING_TYPE_PKCS1      = RSA_PKCS1_PADDING,
-    DD_RSA_PADDING_TYPE_SSLV23     = RSA_SSLV23_PADDING
 };
 
 typedef NS_ENUM(int, DD_RSA_SIGN_DIGEST_TYPE) {
@@ -29,13 +28,28 @@ typedef NS_ENUM(int, DD_RSA_SIGN_DIGEST_TYPE) {
 
 @interface NSString (DDRSA)
 
-// Public Encrypt
+// Public Encrypt with public key, padding is DD_RSA_PADDING_TYPE_PKCS1
+- (NSString *)dd_rsaEncryptWithPublicKey:(NSString *)publicKey;
+
+// Public Encrypt with public key and padding
 - (NSString *)dd_rsaEncryptWithPublicKey:(NSString *)publicKey padding:(DD_RSA_PADDING_TYPE)padding;
+
+// Public Encrypt with path of public pem file, padding is DD_RSA_PADDING_TYPE_PKCS1
+- (NSString *)dd_rsaEncryptWithPublicKeyPath:(NSString *)path;
+
+// Public Encrypt with path of public pem file and padding
 - (NSString *)dd_rsaEncryptWithPublicKeyPath:(NSString *)path padding:(DD_RSA_PADDING_TYPE)padding;
 
-// Private Decrypt
-- (NSString *)dd_rsaDecryptWithPrivateKey:(NSString *)privateKey padding:(DD_RSA_PADDING_TYPE)padding;
-- (NSString *)dd_rsaDecryptWithPrivateKeyPath:(NSString *)path padding:(DD_RSA_PADDING_TYPE)padding;
+// Private Decrypt with private key, padding is DD_RSA_PADDING_TYPE_PKCS1
+- (NSString *)dd_rsaDecryptWithPrivateKey:(NSString *)privateKey;
 
+// Private Decrypt with private key
+- (NSString *)dd_rsaDecryptWithPrivateKey:(NSString *)privateKey padding:(DD_RSA_PADDING_TYPE)padding;
+
+// Private Decrypt with path of private pem file, padding is DD_RSA_PADDING_TYPE_PKCS1
+- (NSString *)dd_rsaDecryptWithPrivateKeyPath:(NSString *)path;
+
+// Private Decrypt with path of private pem file and padding
+- (NSString *)dd_rsaDecryptWithPrivateKeyPath:(NSString *)path padding:(DD_RSA_PADDING_TYPE)padding;
 
 @end

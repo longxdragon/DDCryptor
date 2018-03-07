@@ -113,10 +113,16 @@
         return nil;
     }
     
+    int paddinglen = 0;
+    switch (padding) {
+        case DD_RSA_PADDING_TYPE_PKCS1: paddinglen = 11; break;
+        case DD_RSA_PADDING_TYPE_NONE: paddinglen = 0; break;
+    }
+    
     int len = (int)[plainData length];
     int clen = RSA_size(rsa);
-    int blocklen = isEncrypt ? clen - 11 : clen;
-    int cipherlen = isEncrypt ? clen : clen - 11;
+    int blocklen = isEncrypt ? clen - paddinglen : clen;
+    int cipherlen = isEncrypt ? clen : clen - paddinglen;
     int blockCount = (int)ceil((double)len/blocklen);
     
     // RSA加密是有长度限制，支持分段加密
@@ -148,9 +154,12 @@
     return [mutableData copy];
 }
 
-#pragma mark - Public
+#pragma mark - Public Encrypt
 
-// RSA + Base64
+- (NSString *)dd_rsaEncryptWithPublicKey:(NSString *)publicKey {
+    return [self dd_rsaEncryptWithPublicKey:publicKey padding:DD_RSA_PADDING_TYPE_PKCS1];
+}
+
 - (NSString *)dd_rsaEncryptWithPublicKey:(NSString *)publicKey padding:(DD_RSA_PADDING_TYPE)padding {
     NSString *path = [DDCryptorFile rsaPublicKeyFile];
     if (![self _localFormatWithPublicKey:publicKey path:path]) {
@@ -158,6 +167,10 @@
     }
     NSString *result = [self dd_rsaEncryptWithPublicKeyPath:path padding:padding];
     return result;
+}
+
+- (NSString *)dd_rsaEncryptWithPublicKeyPath:(NSString *)path {
+    return [self dd_rsaEncryptWithPublicKeyPath:path padding:DD_RSA_PADDING_TYPE_PKCS1];
 }
 
 - (NSString *)dd_rsaEncryptWithPublicKeyPath:(NSString *)path padding:(DD_RSA_PADDING_TYPE)padding {
@@ -175,7 +188,12 @@
     return result;
 }
 
-// Private Decrypt
+#pragma mark - Private Decrypt
+
+- (NSString *)dd_rsaDecryptWithPrivateKey:(NSString *)privateKey {
+    return [self dd_rsaDecryptWithPrivateKey:privateKey padding:DD_RSA_PADDING_TYPE_PKCS1];
+}
+
 - (NSString *)dd_rsaDecryptWithPrivateKey:(NSString *)privateKey padding:(DD_RSA_PADDING_TYPE)padding {
     NSString *path = [DDCryptorFile rsaPrivateKeyFile];
     if (![self _localFormatWithPrivateKey:privateKey path:path]) {
@@ -183,6 +201,10 @@
     }
     NSString *result = [self dd_rsaDecryptWithPrivateKeyPath:path padding:padding];
     return result;
+}
+
+- (NSString *)dd_rsaDecryptWithPrivateKeyPath:(NSString *)path {
+    return [self dd_rsaDecryptWithPrivateKeyPath:path padding:DD_RSA_PADDING_TYPE_PKCS1];
 }
 
 - (NSString *)dd_rsaDecryptWithPrivateKeyPath:(NSString *)path padding:(DD_RSA_PADDING_TYPE)padding {
