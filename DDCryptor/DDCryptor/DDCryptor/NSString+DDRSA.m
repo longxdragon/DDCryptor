@@ -79,27 +79,33 @@
 }
 
 // 利用OpenSSl库读取本地pem文件形式的公钥
-- (RSA *)_rsaFromLocalKeyPath:(NSString *)path {
+- (RSA *)_rsaFromLocalKeyPath:(NSString *)path isPublic:(BOOL)isPublic {
     FILE *pubkey = fopen([path cStringUsingEncoding:1], "rb");
     if (pubkey == NULL) {
         NSLog(@"duh: %@", [path stringByAppendingString:@" not found"]);
-        return nil;
+        return NULL;
     }
     
-    RSA *rsa = PEM_read_RSA_PUBKEY(pubkey, NULL, NULL, NULL);
+    RSA *rsa = NULL;
+    if (isPublic) {
+        rsa = PEM_read_RSA_PUBKEY(pubkey, NULL, NULL, NULL);
+    } else {
+        rsa = PEM_read_RSAPrivateKey(pubkey, NULL, NULL, NULL);
+    }
+    
     fclose(pubkey);
     if (rsa == NULL) {
         NSLog(@"Error reading RSA public key.");
-        return nil;
+        return NULL;
     }
     
     return rsa;
 }
 
 // RSA 操作
-// 私钥加密、私钥解密、公钥加密、公钥解密
+// 私钥解密、公钥加密
 - (NSData *)_rsaCryptWithRSA:(RSA *)rsa plainData:(NSData *)plainData padding:(DD_RSA_PADDING_TYPE)padding isEncrypt:(BOOL)isEncrypt {
-    if (!rsa) {
+    if (rsa == NULL) {
         return nil;
     }
     if ([plainData length] == 0) {
@@ -109,7 +115,8 @@
     
     int len = (int)[plainData length];
     int clen = RSA_size(rsa);
-    int blocklen = clen - 11;
+    int blocklen = isEncrypt ? clen - 11 : clen;
+    int cipherlen = isEncrypt ? clen : clen - 11;
     int blockCount = (int)ceil((double)len/blocklen);
     
     // RSA加密是有长度限制，支持分段加密
@@ -119,19 +126,19 @@
         int reallen = MIN(blocklen, len - loc);
         NSData *segmentData = [plainData subdataWithRange:NSMakeRange(loc, reallen)];
         
-        unsigned char *cipherBuffer = calloc(clen, sizeof(unsigned char));
+        unsigned char *cipherBuffer = calloc(cipherlen, sizeof(unsigned char));
         unsigned char *segmentBuffer = (unsigned char *)[segmentData bytes];
-        int result = -1;
+        int status = -1;
         if (isEncrypt) {
-            result = RSA_public_encrypt(reallen, segmentBuffer, cipherBuffer, rsa, padding);
+            status = RSA_public_encrypt(reallen, segmentBuffer, cipherBuffer, rsa, padding);
         } else {
-            result = RSA_public_decrypt(reallen, segmentBuffer, cipherBuffer, rsa,  padding);
+            status = RSA_private_decrypt(reallen, segmentBuffer, cipherBuffer, rsa, padding);
         }
-        if (result == -1) {
-            return nil;
+        if (status == -1) {
+            continue;
         }
         
-        NSData *cipherData = [[NSData alloc] initWithBytes:cipherBuffer length:clen];
+        NSData *cipherData = [[NSData alloc] initWithBytes:cipherBuffer length:cipherlen];
         if (cipherData) {
             [mutableData appendData:cipherData];
         }
@@ -157,60 +164,13 @@
     if (!path || path.length == 0) {
         return nil;
     }
-    
+    // 1
     NSData *plainData = [self dataUsingEncoding:NSUTF8StringEncoding];
-    RSA *rsa = [self _rsaFromLocalKeyPath:path];
+    // 2
+    RSA *rsa = [self _rsaFromLocalKeyPath:path isPublic:YES];
     NSData *resultData = [self _rsaCryptWithRSA:rsa plainData:plainData padding:padding isEncrypt:YES];
     RSA_free(rsa);
-    
-    NSString *result = [GTMBase64 stringByEncodingData:resultData];
-    return result;
-}
-
-// Base64 + RSA
-- (NSString *)dd_rsaDecryptWithPublicKey:(NSString *)publicKey padding:(DD_RSA_PADDING_TYPE)padding {
-    NSString *path = [DDCryptorFile rsaPublicKeyFile];
-    if (![self _localFormatWithPublicKey:publicKey path:path]) {
-        return nil;
-    }
-    NSString *result = [self dd_rsaDecryptWithPublicKeyPath:path padding:padding];
-    return result;
-}
-
-- (NSString *)dd_rsaDecryptWithPublicKeyPath:(NSString *)path padding:(DD_RSA_PADDING_TYPE)padding {
-    if (!path || path.length == 0) {
-        return nil;
-    }
-    
-    NSData *plainData = [GTMBase64 decodeData:[self dataUsingEncoding:NSUTF8StringEncoding]];
-    RSA *rsa = [self _rsaFromLocalKeyPath:path];
-    NSData *resultData = [self _rsaCryptWithRSA:rsa plainData:plainData padding:padding isEncrypt:NO];
-    RSA_free(rsa);
-    
-    NSString *result = [[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding];
-    return result;
-}
-
-// Private Encrypt
-- (NSString *)dd_rsaEncryptWithPrivateKey:(NSString *)privateKey padding:(DD_RSA_PADDING_TYPE)padding {
-    NSString *path = [DDCryptorFile rsaPrivateKeyFile];
-    if (![self _localFormatWithPrivateKey:privateKey path:path]) {
-        return nil;
-    }
-    NSString *result = [self dd_rsaEncryptWithPrivateKeyPath:path padding:padding];
-    return result;
-}
-
-- (NSString *)dd_rsaEncryptWithPrivateKeyPath:(NSString *)path padding:(DD_RSA_PADDING_TYPE)padding {
-    if (!path || path.length == 0) {
-        return nil;
-    }
-    
-    NSData *plainData = [self dataUsingEncoding:NSUTF8StringEncoding];
-    RSA *rsa = [self _rsaFromLocalKeyPath:path];
-    NSData *resultData = [self _rsaCryptWithRSA:rsa plainData:plainData padding:padding isEncrypt:YES];
-    RSA_free(rsa);
-    
+    // 3
     NSString *result = [GTMBase64 stringByEncodingData:resultData];
     return result;
 }
@@ -229,13 +189,14 @@
     if (!path || path.length == 0) {
         return nil;
     }
-    
-    NSData *plainData = [GTMBase64 decodeData:[self dataUsingEncoding:NSUTF8StringEncoding]];
-    RSA *rsa = [self _rsaFromLocalKeyPath:path];
+    // 1
+    NSData *plainData = [GTMBase64 decodeString:self];
+    // 2
+    RSA *rsa = [self _rsaFromLocalKeyPath:path isPublic:NO];
     NSData *resultData = [self _rsaCryptWithRSA:rsa plainData:plainData padding:padding isEncrypt:NO];
     RSA_free(rsa);
-    
-    NSString *result = [[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding];
+    // 3
+    NSString *result = [[NSString alloc] initWithBytes:[resultData bytes] length:strlen([resultData bytes]) encoding:NSUTF8StringEncoding];
     return result;
 }
 

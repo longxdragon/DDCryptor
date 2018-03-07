@@ -33,14 +33,6 @@ typedef NS_ENUM(int, DD_RSA_SIGN_DIGEST_TYPE) {
 - (NSString *)dd_rsaEncryptWithPublicKey:(NSString *)publicKey padding:(DD_RSA_PADDING_TYPE)padding;
 - (NSString *)dd_rsaEncryptWithPublicKeyPath:(NSString *)path padding:(DD_RSA_PADDING_TYPE)padding;
 
-// Public Decrypt
-- (NSString *)dd_rsaDecryptWithPublicKey:(NSString *)publicKey padding:(DD_RSA_PADDING_TYPE)padding;
-- (NSString *)dd_rsaDecryptWithPublicKeyPath:(NSString *)path padding:(DD_RSA_PADDING_TYPE)padding;
-
-// Private Encrypt
-- (NSString *)dd_rsaEncryptWithPrivateKey:(NSString *)privateKey padding:(DD_RSA_PADDING_TYPE)padding;
-- (NSString *)dd_rsaEncryptWithPrivateKeyPath:(NSString *)path padding:(DD_RSA_PADDING_TYPE)padding;
-
 // Private Decrypt
 - (NSString *)dd_rsaDecryptWithPrivateKey:(NSString *)privateKey padding:(DD_RSA_PADDING_TYPE)padding;
 - (NSString *)dd_rsaDecryptWithPrivateKeyPath:(NSString *)path padding:(DD_RSA_PADDING_TYPE)padding;

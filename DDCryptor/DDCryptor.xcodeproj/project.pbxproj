@@ -11,7 +11,6 @@
 		3D3062491F3C5D9500266171 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3062481F3C5D9500266171 /* AppDelegate.m */; };
 		3D3062511F3C5D9500266171 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D3062501F3C5D9500266171 /* Assets.xcassets */; };
 		3D30625F1F3C5D9500266171 /* DDCryptorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D30625E1F3C5D9500266171 /* DDCryptorTests.m */; };
-		3D30626A1F3C5D9500266171 /* DDCryptorUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3062691F3C5D9500266171 /* DDCryptorUITests.m */; };
 		3D4728971F419EF700C8606E /* NSString+DDRSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4728961F419EF700C8606E /* NSString+DDRSA.m */; };
 		3D4728F61F41A0CF00C8606E /* DDCryptorFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4728F51F41A0CF00C8606E /* DDCryptorFile.m */; };
 		3DE8625B204CE5A700015E87 /* NSString+DDDES.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DE8625A204CE5A700015E87 /* NSString+DDDES.m */; };
@@ -21,13 +20,6 @@
 
 /* Begin PBXContainerItemProxy section */
 		3D30625B1F3C5D9500266171 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3D3062391F3C5D9500266171 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3D3062401F3C5D9500266171;
-			remoteInfo = DDCryptor;
-		};
-		3D3062661F3C5D9500266171 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3D3062391F3C5D9500266171 /* Project object */;
 			proxyType = 1;
@@ -49,9 +41,6 @@
 		3D30625A1F3C5D9500266171 /* DDCryptorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DDCryptorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D30625E1F3C5D9500266171 /* DDCryptorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDCryptorTests.m; sourceTree = "<group>"; };
 		3D3062601F3C5D9500266171 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3D3062651F3C5D9500266171 /* DDCryptorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DDCryptorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3D3062691F3C5D9500266171 /* DDCryptorUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDCryptorUITests.m; sourceTree = "<group>"; };
-		3D30626B1F3C5D9500266171 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D4728951F419EF700C8606E /* NSString+DDRSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DDRSA.h"; sourceTree = "<group>"; };
 		3D4728961F419EF700C8606E /* NSString+DDRSA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDRSA.m"; sourceTree = "<group>"; };
 		3D4728981F419F0C00C8606E /* DDCryptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDCryptor.h; sourceTree = "<group>"; };
@@ -81,13 +70,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3D3062621F3C5D9500266171 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -96,7 +78,6 @@
 			children = (
 				3D3062431F3C5D9500266171 /* DDCryptor */,
 				3D30625D1F3C5D9500266171 /* DDCryptorTests */,
-				3D3062681F3C5D9500266171 /* DDCryptorUITests */,
 				3D3062421F3C5D9500266171 /* Products */,
 				B9313891B420F8F2FCB13115 /* Pods */,
 				F003D78B82A5BCC77EFA0FD6 /* Frameworks */,
@@ -108,7 +89,6 @@
 			children = (
 				3D3062411F3C5D9500266171 /* DDCryptor.app */,
 				3D30625A1F3C5D9500266171 /* DDCryptorTests.xctest */,
-				3D3062651F3C5D9500266171 /* DDCryptorUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -141,15 +121,6 @@
 				3D3062601F3C5D9500266171 /* Info.plist */,
 			);
 			path = DDCryptorTests;
-			sourceTree = "<group>";
-		};
-		3D3062681F3C5D9500266171 /* DDCryptorUITests */ = {
-			isa = PBXGroup;
-			children = (
-				3D3062691F3C5D9500266171 /* DDCryptorUITests.m */,
-				3D30626B1F3C5D9500266171 /* Info.plist */,
-			);
-			path = DDCryptorUITests;
 			sourceTree = "<group>";
 		};
 		3D4728941F419ED900C8606E /* DDCryptor */ = {
@@ -230,24 +201,6 @@
 			productReference = 3D30625A1F3C5D9500266171 /* DDCryptorTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		3D3062641F3C5D9500266171 /* DDCryptorUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3D3062741F3C5D9500266171 /* Build configuration list for PBXNativeTarget "DDCryptorUITests" */;
-			buildPhases = (
-				3D3062611F3C5D9500266171 /* Sources */,
-				3D3062621F3C5D9500266171 /* Frameworks */,
-				3D3062631F3C5D9500266171 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3D3062671F3C5D9500266171 /* PBXTargetDependency */,
-			);
-			name = DDCryptorUITests;
-			productName = DDCryptorUITests;
-			productReference = 3D3062651F3C5D9500266171 /* DDCryptorUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -262,11 +215,6 @@
 						ProvisioningStyle = Automatic;
 					};
 					3D3062591F3C5D9500266171 = {
-						CreatedOnToolsVersion = 8.3.2;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 3D3062401F3C5D9500266171;
-					};
-					3D3062641F3C5D9500266171 = {
 						CreatedOnToolsVersion = 8.3.2;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 3D3062401F3C5D9500266171;
@@ -288,7 +236,6 @@
 			targets = (
 				3D3062401F3C5D9500266171 /* DDCryptor */,
 				3D3062591F3C5D9500266171 /* DDCryptorTests */,
-				3D3062641F3C5D9500266171 /* DDCryptorUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -303,13 +250,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		3D3062581F3C5D9500266171 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3D3062631F3C5D9500266171 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -432,14 +372,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3D3062611F3C5D9500266171 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3D30626A1F3C5D9500266171 /* DDCryptorUITests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -447,11 +379,6 @@
 			isa = PBXTargetDependency;
 			target = 3D3062401F3C5D9500266171 /* DDCryptor */;
 			targetProxy = 3D30625B1F3C5D9500266171 /* PBXContainerItemProxy */;
-		};
-		3D3062671F3C5D9500266171 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3D3062401F3C5D9500266171 /* DDCryptor */;
-			targetProxy = 3D3062661F3C5D9500266171 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -604,28 +531,6 @@
 			};
 			name = Release;
 		};
-		3D3062751F3C5D9500266171 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = DDCryptorUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.longxdragon.DDCryptorUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = DDCryptor;
-			};
-			name = Debug;
-		};
-		3D3062761F3C5D9500266171 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = DDCryptorUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.longxdragon.DDCryptorUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = DDCryptor;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -652,15 +557,6 @@
 			buildConfigurations = (
 				3D3062721F3C5D9500266171 /* Debug */,
 				3D3062731F3C5D9500266171 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3D3062741F3C5D9500266171 /* Build configuration list for PBXNativeTarget "DDCryptorUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3D3062751F3C5D9500266171 /* Debug */,
-				3D3062761F3C5D9500266171 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
