@@ -72,4 +72,11 @@ static NSString *DESKey = @"lPrzT8BMoJt2dUSslfwn3Vkl";
     XCTAssertTrue([decrypt isEqualToString:testStr], @"decry fail");
 }
 
+- (void)testMD5 {
+    NSString *str = @"40D9CD8AF69C030929C5AA30F1DC8BDE";
+    NSString *result = [testStr dd_md5];
+    XCTAssertNotNil(result, @"fail");
+    XCTAssertTrue([result isEqualToString:str], @"fail");
+}
+
 @end
