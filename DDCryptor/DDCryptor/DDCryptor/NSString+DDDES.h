@@ -12,14 +12,18 @@
 
 // 3DES encrypt
 - (NSString *)dd_3desEncryptWithKey:(NSString *)key;
+- (NSString *)dd_3desEncryptWithKey:(NSString *)key iv:(NSString *)iv;
 
 // 3DES decrypt
 - (NSString *)dd_3desDecryptWithKey:(NSString *)key;
+- (NSString *)dd_3desDecryptWithKey:(NSString *)key iv:(NSString *)iv;
 
 // DES encrypt
 - (NSString *)dd_desEncryptWithKey:(NSString *)key;
+- (NSString *)dd_desEncryptWithKey:(NSString *)key iv:(NSString *)iv;
 
 // DES decrypt
 - (NSString *)dd_desDecryptWithKey:(NSString *)key;
+- (NSString *)dd_desDecryptWithKey:(NSString *)key iv:(NSString *)iv;
 
 @end
