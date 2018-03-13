@@ -102,7 +102,7 @@ static NSString *kDDDESGIV = @"dd.com.des";
 }
 
 - (NSString *)dd_3desDecryptWithKey:(NSString *)key {
-    return [self dd_3desDecryptWithKey:key iv:kDDDESGIV]
+    return [self dd_3desDecryptWithKey:key iv:kDDDESGIV];
 }
 
 - (NSString *)dd_3desDecryptWithKey:(NSString *)key iv:(NSString *)iv {
