@@ -1,11 +1,11 @@
 platform :ios, '7.0'
 
 target 'DDCryptor' do
-	pod 'OpenSSL'
-    pod 'GTMBase64'
+	pod 'OpenSSL-Universal', '~> 1.0'
+    pod 'GTMBase64', '~> 1.0.0'
 end
 
 target 'DDCryptorTests' do
-    pod 'OpenSSL'
-    pod 'GTMBase64'
+    pod 'OpenSSL-Universal', '~> 1.0'
+    pod 'GTMBase64', '~> 1.0.0'
 end
