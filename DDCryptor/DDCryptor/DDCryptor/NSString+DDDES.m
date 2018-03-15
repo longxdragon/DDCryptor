@@ -20,7 +20,12 @@ typedef NS_ENUM(NSInteger, DDDESType) {
 
 static NSString *kDDDESGIV = @"dd.com.des";
 
-- (NSData *)_dd_3desCryptWithKey:(NSString *)key data:(NSData *)data isEncrypt:(BOOL)isEncrypt type:(DDDESType)type {
+- (NSData *)_dd_3desCryptWithKey:(NSString *)key
+                            data:(NSData *)data
+                       isEncrypt:(BOOL)isEncrypt
+                            type:(DDDESType)type
+                              iv:(NSString *)iv {
+    
     const char *cstr = [key cStringUsingEncoding:NSUTF8StringEncoding];
     NSData *keyData = [NSData dataWithBytes:cstr length:key.length];
     
@@ -39,7 +44,7 @@ static NSString *kDDDESGIV = @"dd.com.des";
     memset((void *)bufferPtr, 0x0, bufferPtrSize);
     
     const void *vkey = (const void *) [key UTF8String];
-    const void *vinitVec = (const void *) [kDDDESGIV UTF8String];
+    const void *vinitVec = (const void *) [iv UTF8String];
     
     uint32_t operation = kCCEncrypt;
     if (!isEncrypt) {
@@ -77,48 +82,80 @@ static NSString *kDDDESGIV = @"dd.com.des";
 #pragma mark - Public
 
 - (NSString *)dd_3desEncryptWithKey:(NSString *)key {
-    if (!key || key.length == 0) {
+    return [self dd_3desEncryptWithKey:key iv:kDDDESGIV];
+}
+
+- (NSString *)dd_3desEncryptWithKey:(NSString *)key iv:(NSString *)iv {
+    if (!key || key.length == 0 || !iv || iv.length == 0) {
         return nil;
     }
     
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *resultData = [self _dd_3desCryptWithKey:key data:data isEncrypt:YES type:DDDESType3DES];
+    NSData *resultData = [self _dd_3desCryptWithKey:key
+                                               data:data
+                                          isEncrypt:YES
+                                               type:DDDESType3DES
+                                                 iv:iv];
     NSString *result = [GTMBase64 stringByEncodingData:resultData];
     
     return result;
 }
 
 - (NSString *)dd_3desDecryptWithKey:(NSString *)key {
-    if (!key || key.length == 0) {
+    return [self dd_3desDecryptWithKey:key iv:kDDDESGIV];
+}
+
+- (NSString *)dd_3desDecryptWithKey:(NSString *)key iv:(NSString *)iv {
+    if (!key || key.length == 0 || !iv || iv.length == 0) {
         return nil;
     }
     
     NSData *data = [GTMBase64 decodeData:[self dataUsingEncoding:NSUTF8StringEncoding]];
-    NSData *resultData = [self _dd_3desCryptWithKey:key data:data isEncrypt:NO type:DDDESType3DES];
+    NSData *resultData = [self _dd_3desCryptWithKey:key
+                                               data:data
+                                          isEncrypt:NO
+                                               type:DDDESType3DES
+                                                 iv:iv];
     NSString *result = [[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding];
     
     return result;
 }
 
 - (NSString *)dd_desEncryptWithKey:(NSString *)key {
-    if (!key || key.length == 0) {
+    return [self dd_desEncryptWithKey:key iv:kDDDESGIV];
+}
+
+- (NSString *)dd_desEncryptWithKey:(NSString *)key iv:(NSString *)iv {
+    if (!key || key.length == 0 || !iv || iv.length == 0) {
         return nil;
     }
     
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *resultData = [self _dd_3desCryptWithKey:key data:data isEncrypt:YES type:DDDESTypeDES];
+    NSData *resultData = [self _dd_3desCryptWithKey:key
+                                               data:data
+                                          isEncrypt:YES
+                                               type:DDDESTypeDES
+                                                 iv:iv];
     NSString *result = [GTMBase64 stringByEncodingData:resultData];
     
     return result;
 }
 
 - (NSString *)dd_desDecryptWithKey:(NSString *)key {
-    if (!key || key.length == 0) {
+    return [self dd_desDecryptWithKey:key iv:kDDDESGIV];
+}
+
+- (NSString *)dd_desDecryptWithKey:(NSString *)key iv:(NSString *)iv {
+    if (!key || key.length == 0 || !iv || iv.length == 0) {
         return nil;
     }
     
     NSData *data = [GTMBase64 decodeData:[self dataUsingEncoding:NSUTF8StringEncoding]];
-    NSData *resultData = [self _dd_3desCryptWithKey:key data:data isEncrypt:NO type:DDDESTypeDES];
+    NSData *resultData = [self _dd_3desCryptWithKey:key
+                                               data:data
+                                          isEncrypt:NO
+                                               type:DDDESTypeDES
+                                                 iv:iv];
     NSString *result = [[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding];
     
     return result;
