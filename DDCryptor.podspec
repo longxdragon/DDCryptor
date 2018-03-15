@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "DDCryptor"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "A set of cryptors, include RSA, MD5, Base64, DES some more..."
 
   s.homepage     = "https://github.com/longxdragon/DDCryptor"
